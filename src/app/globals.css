@@ -1395,10 +1395,10 @@ html[data-theme="dark"] .stage-shell {
 
 @media (max-width: 560px) {
   .mascot-bubble--overlay {
-    top: auto;
-    right: 12px;
-    bottom: 96px;
-    max-width: 168px;
+    top: 52px;
+    right: 10px;
+    bottom: auto;
+    max-width: 196px;
     font-size: 0.62rem;
   }
 }

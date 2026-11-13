@@ -269,12 +269,27 @@ function Mascot({
 
   if (settings.preset === "none") return null;
   const preset = settings.preset === "bun" ? "bun" : "boxy";
-  const scale = narrow ? 0.64 : 0.78;
-  const position: Vec3 = narrow ? [1.55, 0.08, 1.0] : [1.95, 0.08, 0.7];
+  const scale = narrow ? 0.72 : 0.84;
+  // Маскот стоит перед подносом, а не на нём: иначе кромка тарелки
+  // проходит по лицу, а на узких экранах его ещё и закрывает подпись.
+  const x = narrow ? 2.78 : 2.95;
+  const z = narrow ? 0.86 : 0.75;
+  const bodyY = 0.02 + 0.055 * scale;
 
   return (
-    <group position={position} scale={scale} rotation={[0, -0.2, 0]}>
-      <MascotBody preset={preset} faces={settings.faces} reducedMotion={reducedMotion} />
+    <group position={[x, 0, z]}>
+      {/* Собственная подставка: маскот стоит на уровне подноса, а не висит в воздухе. */}
+      <mesh position={[0, -0.085, 0]} receiveShadow castShadow>
+        <cylinderGeometry args={[0.62, 0.68, 0.21, 40]} />
+        <meshStandardMaterial color="#e9dbc8" roughness={0.86} />
+      </mesh>
+      <mesh position={[0, 0.016, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.615, 0.012, 6, 40]} />
+        <meshStandardMaterial color="#e2542c" roughness={0.5} />
+      </mesh>
+      <group position={[0, bodyY, 0]} scale={scale} rotation={[0, 0.5, 0]}>
+        <MascotBody preset={preset} faces={settings.faces} reducedMotion={reducedMotion} />
+      </group>
     </group>
   );
 }
@@ -396,8 +411,10 @@ function SceneContent({
         zoomSpeed={0.7}
         minDistance={4.4}
         maxDistance={9.2}
-        minPolarAngle={0.38}
-        maxPolarAngle={1.46}
+        minPolarAngle={0.45}
+        maxPolarAngle={1.28}
+        minAzimuthAngle={0.18}
+        maxAzimuthAngle={1.05}
         target={[0, 0.82, 0]}
       />
       <Preload all />
