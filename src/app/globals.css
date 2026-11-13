@@ -1366,21 +1366,41 @@ html[data-theme="dark"] .stage-shell {
   width: max-content;
   max-width: 210px;
   padding: 8px 11px;
-  border: 1px solid rgba(37, 30, 23, 0.12);
+  border: 1px solid var(--line);
   border-radius: 12px;
-  background: rgba(255, 253, 248, 0.96);
-  color: #251e17;
+  background: var(--surface);
+  color: var(--ink);
   box-shadow: 0 10px 24px rgba(71, 48, 27, 0.18);
   font-family: var(--font-body);
   font-size: 0.66rem;
   line-height: 1.35;
 }
 
+/* Подпись маскота живёт в обычном DOM поверх canvasa: портал drei <Html>
+   внутри <Canvas> ломал unmount и ронял React. */
+.mascot-bubble--overlay {
+  position: absolute;
+  z-index: 4;
+  top: 56px;
+  right: 14px;
+  pointer-events: none;
+}
+
 .mascot-bubble strong {
   font-family: var(--font-display);
   font-size: 0.62rem;
   letter-spacing: -0.02em;
-  color: #d94b2b;
+  color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .mascot-bubble--overlay {
+    top: auto;
+    right: 12px;
+    bottom: 96px;
+    max-width: 168px;
+    font-size: 0.62rem;
+  }
 }
 
 /* ---------- configurator details ---------- */

@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import {
   Component,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type ReactNode,
@@ -12,6 +13,7 @@ import {
 import type { CategoryId, MenuItem } from "@/lib/menu";
 import type { CharacterSettings } from "@/lib/settings";
 import { formatRub } from "@/lib/format";
+import { PHRASES } from "./model-paths";
 
 const FoodScene = dynamic(() => import("./FoodScene"), {
   ssr: false,
@@ -142,6 +144,14 @@ export function HeroStage({
   const priceLabel = price !== null ? formatRub(price) : "По запросу";
   const isStatic = forcedStatic || webgl === false;
 
+  const phrase = useMemo(() => {
+    const list = PHRASES[category] ?? PHRASES.default;
+    return list[item.id.charCodeAt(0) % list.length]!;
+  }, [category, item.id]);
+
+  const showBubble =
+    character.phrases && character.preset !== "none" && !isStatic && webgl === true;
+
   return (
     <div
       ref={containerRef}
@@ -169,13 +179,19 @@ export function HeroStage({
         >
           <FoodScene
             item={item}
-            category={category}
             character={character}
             accent={accent}
             reducedMotion={reducedMotion}
             inView={inView && documentVisible}
           />
         </SceneBoundary>
+      ) : null}
+
+      {showBubble ? (
+        <div className="mascot-bubble mascot-bubble--overlay" role="status" aria-live="polite">
+          <strong>{character.name}</strong>
+          <span>{phrase}</span>
+        </div>
       ) : null}
 
       {isStatic ? (

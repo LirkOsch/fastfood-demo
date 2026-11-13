@@ -2,7 +2,6 @@
 
 import {
   ContactShadows,
-  Html,
   OrbitControls,
   Preload,
   RoundedBox,
@@ -13,8 +12,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, memo, useEffect, useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import type { CategoryId, MenuItem, Visual } from "@/lib/menu";
-import { ALL_MODELS, PHRASES, modelPathForItem } from "./model-paths";
+import type { MenuItem, Visual } from "@/lib/menu";
+import { ALL_MODELS, modelPathForItem } from "./model-paths";
 import type { CharacterSettings } from "@/lib/settings";
 
 ALL_MODELS.forEach((path) => useGLTF.preload(path));
@@ -260,21 +259,13 @@ const MascotBody = memo(function MascotBody({
 
 function Mascot({
   settings,
-  category,
-  itemId,
   reducedMotion,
 }: {
   settings: CharacterSettings;
-  category: CategoryId;
-  itemId: string;
   reducedMotion: boolean;
 }) {
   const { size } = useThree();
   const narrow = size.width < 560;
-  const phrase = useMemo(() => {
-    const list = PHRASES[category] ?? PHRASES.default;
-    return list[itemId.charCodeAt(0) % list.length]!;
-  }, [category, itemId]);
 
   if (settings.preset === "none") return null;
   const preset = settings.preset === "bun" ? "bun" : "boxy";
@@ -284,19 +275,6 @@ function Mascot({
   return (
     <group position={position} scale={scale} rotation={[0, -0.2, 0]}>
       <MascotBody preset={preset} faces={settings.faces} reducedMotion={reducedMotion} />
-      {settings.phrases ? (
-        <Html
-          position={[0, 1.32, 0]}
-          center
-          zIndexRange={[30, 0]}
-          style={{ pointerEvents: "none" }}
-        >
-          <div className="mascot-bubble" role="status" aria-live="polite">
-            <strong>{settings.name}</strong>
-            <span>{phrase}</span>
-          </div>
-        </Html>
-      ) : null}
     </group>
   );
 }
@@ -360,14 +338,12 @@ function SoftDust({ accent, reducedMotion }: { accent: string; reducedMotion: bo
 
 function SceneContent({
   item,
-  category,
   character,
   accent,
   reducedMotion,
   controlsRef,
 }: {
   item: MenuItem;
-  category: CategoryId;
   character: CharacterSettings;
   accent: string;
   reducedMotion: boolean;
@@ -398,12 +374,7 @@ function SceneContent({
       <Suspense fallback={null}>
         <FoodModel item={item} reducedMotion={reducedMotion} />
       </Suspense>
-      <Mascot
-        settings={character}
-        category={category}
-        itemId={item.id}
-        reducedMotion={reducedMotion}
-      />
+      <Mascot settings={character} reducedMotion={reducedMotion} />
       <SoftDust accent={accent} reducedMotion={reducedMotion} />
 
       <ContactShadows
@@ -446,7 +417,6 @@ function LoaderBadge() {
 
 export default function FoodScene({
   item,
-  category,
   character,
   accent,
   reducedMotion,
@@ -454,7 +424,6 @@ export default function FoodScene({
   onReady,
 }: {
   item: MenuItem;
-  category: CategoryId;
   character: CharacterSettings;
   accent: string;
   reducedMotion: boolean;
@@ -479,7 +448,6 @@ export default function FoodScene({
       >
         <SceneContent
           item={item}
-          category={category}
           character={character}
           accent={accent}
           reducedMotion={reducedMotion}
