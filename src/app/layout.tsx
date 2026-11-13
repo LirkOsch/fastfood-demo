@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { AssistantWidget } from "@/components/assistant/AssistantWidget";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { PwaRegister } from "@/components/site/PwaRegister";
 
@@ -105,7 +106,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">
           Перейти к содержимому
         </a>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <AssistantWidget />
+        </CartProvider>
         <PwaRegister />
       </body>
     </html>

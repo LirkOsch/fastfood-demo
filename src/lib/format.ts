@@ -1,4 +1,5 @@
 import { formatInTimeZone } from "date-fns-tz";
+import { ru } from "date-fns/locale";
 
 const rub = new Intl.NumberFormat("ru-RU", {
   style: "currency",
@@ -53,7 +54,7 @@ export function formatDateTime(value: Date | string | null | undefined, timeZone
   if (!value) return "";
   const date = typeof value === "string" ? new Date(value) : value;
   if (Number.isNaN(date.getTime())) return "";
-  return formatInTimeZone(date, timeZone, "d MMMM, HH:mm");
+  return formatInTimeZone(date, timeZone, "d MMMM, HH:mm", { locale: ru });
 }
 
 export function formatTime(value: Date | string | null | undefined, timeZone: string): string {
