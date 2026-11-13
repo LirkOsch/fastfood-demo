@@ -4048,7 +4048,8 @@ html[data-theme="dark"] .stage-shell {
   list-style: disc;
 }
 
-.legal-shell a {
+/* Подчёркиваем только текстовые ссылки: кнопки (.btn) сохраняют свой вид. */
+.legal-shell a:not(.btn) {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
