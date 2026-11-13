@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-labelledby="boxyTitle">
+  <title id="boxyTitle">Боксик с подносом</title>
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EE6A42"/>
+      <stop offset="1" stop-color="#D2472A"/>
+    </linearGradient>
+    <filter id="s" x="-40%" y="-30%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#5B3A22" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <ellipse cx="300" cy="540" rx="178" ry="26" fill="#5B3A22" opacity=".14"/>
+  <g filter="url(#s)">
+    <path d="M180 238c0-28 20-50 48-50h144c28 0 48 22 48 50v244a36 36 0 0 1-36 36H216a36 36 0 0 1-36-36V238Z" fill="url(#body)"/>
+    <path d="M180 238h240v64H180z" fill="#F3E4CE"/>
+    <path d="M180 238c12-24 56-40 120-40s108 16 120 40" fill="#F3E4CE"/>
+    <path d="M180 238c12 24 56 40 120 40s108-16 120-40" fill="none" stroke="#D8C3A5" stroke-width="5"/>
+    <ellipse cx="248" cy="344" rx="17" ry="21" fill="#251E17"/>
+    <ellipse cx="352" cy="344" rx="17" ry="21" fill="#251E17"/>
+    <circle cx="243" cy="336" r="5" fill="#FFF9EE"/>
+    <circle cx="347" cy="336" r="5" fill="#FFF9EE"/>
+    <circle cx="220" cy="378" r="14" fill="#F4A79A" opacity=".82"/>
+    <circle cx="380" cy="378" r="14" fill="#F4A79A" opacity=".82"/>
+    <path d="M278 384c14 13 34 13 48 0" fill="none" stroke="#251E17" stroke-width="7" stroke-linecap="round"/>
+    <path d="M184 330c-38 12-50 44-34 68" fill="none" stroke="#D2472A" stroke-width="22" stroke-linecap="round"/>
+    <path d="M416 330c38 12 50 44 34 68" fill="none" stroke="#D2472A" stroke-width="22" stroke-linecap="round"/>
+    <path d="M168 398c-34 14-44 38-100 38" fill="none" stroke="#D2472A" stroke-width="20" stroke-linecap="round"/>
+    <path d="M432 398c34 14 44 38 100 38" fill="none" stroke="#D2472A" stroke-width="20" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#s)">
+    <ellipse cx="300" cy="470" rx="182" ry="20" fill="#251E17" opacity=".18"/>
+    <path d="M108 386c0 26 86 46 192 46s192-20 192-46" fill="#E8B34A"/>
+    <ellipse cx="300" cy="386" rx="192" ry="34" fill="#F4C56A"/>
+    <ellipse cx="300" cy="382" rx="150" ry="22" fill="#F7EEDC" opacity=".56"/>
+    <g transform="translate(238 330) rotate(-4)">
+      <path d="M0 38C0 15 20 0 45 0h52c25 0 45 15 45 38v3H0v-3Z" fill="#F4C56A"/>
+      <path d="M-3 42h148" stroke="#B9782F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M2 48h138l-8 16H10L2 48Z" fill="#778A63"/>
+      <path d="M5 64h132l-7 15H12L5 64Z" fill="#6E3A22"/>
+      <path d="M7 79h128l-7 14H14L7 79Z" fill="#F4C56A"/>
+      <path d="M2 93h138c-4 23-25 36-51 36H53c-26 0-47-13-51-36Z" fill="#F4C56A"/>
+    </g>
+    <g fill="none" stroke="#FFF9EE" stroke-width="7" stroke-linecap="round" opacity=".8">
+      <path d="M360 300c-14-18-14-36 0-54 10-13 10-26 0-39"/>
+      <path d="M406 312c-14-18-14-36 0-54 10-13 10-26 0-39"/>
+    </g>
+  </g>
+</svg>

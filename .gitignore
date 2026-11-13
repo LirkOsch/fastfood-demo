@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+data
+*.tsbuildinfo
+.env
+.env.local
+.env*.local
+playwright-report
+test-results
+docs/screenshots/tmp
+scratch-*

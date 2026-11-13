@@ -1,0 +1,57 @@
+{
+  "name": "teply-box",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Тёплый бокс — демо-приложение быстрого питания с заявками, кабинетом и 3D-сценой",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "models": "tsx scripts/build-models.ts",
+    "models:optimize": "node scripts/optimize-models.mjs",
+    "icons": "tsx scripts/build-icons.ts",
+    "seed:demo": "tsx scripts/seed-demo.ts"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.16",
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "bcryptjs": "3.0.3",
+    "clsx": "2.1.1",
+    "date-fns": "4.4.0",
+    "date-fns-tz": "3.2.0",
+    "drizzle-orm": "0.45.4",
+    "idb-keyval": "6.3.0",
+    "lucide-react": "1.72.0",
+    "motion": "14.12.0",
+    "next": "16.4.6",
+    "postgres": "4.1.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "0.0.1",
+    "sharp": "0.35.5",
+    "three": "0.187.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "@playwright/test": "1.65.0",
+    "@types/node": "24.10.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.187.0",
+    "meshoptimizer": "^0.24.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

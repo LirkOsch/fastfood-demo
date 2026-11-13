@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1000" width="900" height="1000" role="img" aria-labelledby="posterTitle">
+  <title id="posterTitle">Боксик — персонаж-коробка с бургером и картошкой</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6E7CE"/>
+      <stop offset="0.55" stop-color="#F1D9B4"/>
+      <stop offset="1" stop-color="#E9C28D"/>
+    </linearGradient>
+    <linearGradient id="boxBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EE6A42"/>
+      <stop offset="1" stop-color="#D2472A"/>
+    </linearGradient>
+    <linearGradient id="bun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4C56A"/>
+      <stop offset="1" stop-color="#DFA344"/>
+    </linearGradient>
+    <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#3B2C20" opacity=".18"/>
+    </pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#5B3A22" flood-opacity=".22"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="1000" fill="url(#bg)"/>
+  <rect width="900" height="1000" fill="url(#dots)" opacity=".65"/>
+  <circle cx="710" cy="212" r="156" fill="#E8B34A" opacity=".55"/>
+  <circle cx="150" cy="760" r="196" fill="#D94B2B" opacity=".13"/>
+  <path d="M-40 870C130 770 250 820 392 900s300 86 548-30v170H-40Z" fill="#778A63" opacity=".22"/>
+  <g fill="none" stroke="#251E17" stroke-width="3" stroke-linecap="round" opacity=".26">
+    <path d="M96 178c22-34 66-48 102-32"/>
+    <path d="M712 700c34-20 78-14 104 12"/>
+    <path d="M690 92c16 10 26 26 28 44"/>
+  </g>
+
+  <g opacity=".8" fill="#D94B2B">
+    <path d="m156 300 9 22 22 9-22 9-9 22-9-22-22-9 22-9Z"/>
+    <path d="m752 520 6 15 15 6-15 6-6 15-6-15-15-6 15-6Z" opacity=".7"/>
+    <path d="m220 860 5 12 12 5-12 5-5 12-5-12-12-5 12-5Z" opacity=".55"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <ellipse cx="450" cy="872" rx="282" ry="44" fill="#5B3A22" opacity=".18"/>
+    <ellipse cx="450" cy="858" rx="232" ry="30" fill="#FFF9EE" opacity=".65"/>
+
+    <!-- fries -->
+    <g transform="translate(612 568) rotate(7)">
+      <path d="M0 58h118l-13 196a26 26 0 0 1-26 24H40a26 26 0 0 1-26-24L0 58Z" fill="#D94B2B"/>
+      <path d="M0 58h118l-4 40H4L0 58Z" fill="#F4E4CC"/>
+      <path d="M26 58V8m22 50V-6m22 64V18m24 40V4" stroke="#E8B34A" stroke-width="17" stroke-linecap="round"/>
+      <circle cx="59" cy="142" r="21" fill="#F4E4CC" opacity=".9"/>
+      <path d="M38 142c8-10 34-10 42 0" fill="none" stroke="#D94B2B" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="48" cy="132" r="3.5" fill="#251E17"/>
+      <circle cx="70" cy="132" r="3.5" fill="#251E17"/>
+    </g>
+
+    <!-- drink -->
+    <g transform="translate(154 588) rotate(-8)">
+      <path d="M10 46h112l-12 184a24 24 0 0 1-24 22H46a24 24 0 0 1-24-22L10 46Z" fill="#F7EEDC"/>
+      <path d="M18 104h96l-7 118a14 14 0 0 1-14 13H39a14 14 0 0 1-14-13l-7-118Z" fill="#E7C94F"/>
+      <path d="M0 46h132" stroke="#251E17" stroke-width="9" stroke-linecap="round"/>
+      <path d="M78 42 104 -28" stroke="#D94B2B" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="42" cy="130" r="7" fill="#FFF9EE" opacity=".7"/>
+      <circle cx="88" cy="164" r="5" fill="#FFF9EE" opacity=".6"/>
+      <circle cx="58" cy="188" r="4" fill="#FFF9EE" opacity=".6"/>
+    </g>
+
+    <!-- box body -->
+    <g transform="translate(252 360)">
+      <path d="M40 86h356l-24 354a42 42 0 0 1-42 38H106a42 42 0 0 1-42-38L40 86Z" fill="url(#boxBody)"/>
+      <path d="M40 86h356l-8 120H48L40 86Z" fill="#F3E4CE"/>
+      <path d="M60 86c22-26 64-42 158-42s136 16 158 42" fill="#F3E4CE"/>
+      <path d="M60 86c22 26 64 42 158 42s136-16 158-42" fill="none" stroke="#D8C3A5" stroke-width="6"/>
+      <path d="M106 118h224" stroke="#D94B2B" stroke-width="8" stroke-linecap="round" opacity=".22"/>
+
+      <!-- face -->
+      <ellipse cx="142" cy="270" rx="24" ry="30" fill="#251E17"/>
+      <ellipse cx="300" cy="270" rx="24" ry="30" fill="#251E17"/>
+      <circle cx="135" cy="258" r="7" fill="#FFF9EE"/>
+      <circle cx="293" cy="258" r="7" fill="#FFF9EE"/>
+      <circle cx="104" cy="316" r="20" fill="#F4A79A" opacity=".8"/>
+      <circle cx="338" cy="316" r="20" fill="#F4A79A" opacity=".8"/>
+      <path d="M182 322c24 22 58 22 82 0" fill="none" stroke="#251E17" stroke-width="10" stroke-linecap="round"/>
+
+      <!-- arms -->
+      <path d="M44 250c-44 16-58 54-38 84" fill="none" stroke="#D2472A" stroke-width="28" stroke-linecap="round"/>
+      <path d="M394 250c44 16 58 54 38 84" fill="none" stroke="#D2472A" stroke-width="28" stroke-linecap="round"/>
+
+      <!-- tray badge -->
+      <rect x="152" y="220" width="168" height="0" fill="none"/>
+      <g transform="translate(420 286)">
+        <ellipse cx="34" cy="36" rx="52" ry="12" fill="#5B3A22" opacity=".16"/>
+        <path d="M12 8h104l-10 44a12 12 0 0 1-12 10H34a12 12 0 0 1-12-10L12 8Z" fill="#E2542C"/>
+        <path d="M6 8h116" stroke="#F3E4CE" stroke-width="10" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- burger in left hand -->
+    <g transform="translate(126 310) rotate(-9)">
+      <path d="M12 52c0-30 26-52 58-52h56c32 0 58 22 58 52v4H12v-4Z" fill="url(#bun)"/>
+      <path d="M8 56h180" stroke="#B9782F" stroke-width="6" stroke-linecap="round"/>
+      <path d="M14 62h168l-10 20H24L14 62Z" fill="#778A63"/>
+      <path d="M18 82h160l-8 18H26l-8-18Z" fill="#6E3A22"/>
+      <path d="M20 100h156l-8 16H28l-8-16Z" fill="#F4C56A"/>
+      <path d="M14 116h168c-4 28-30 44-62 44H76c-32 0-58-16-62-44Z" fill="url(#bun)"/>
+      <g fill="#FFF4D8" opacity=".9">
+        <ellipse cx="52" cy="31" rx="7" ry="3.5" transform="rotate(-20 52 31)"/>
+        <ellipse cx="96" cy="22" rx="7" ry="3.5" transform="rotate(8 96 22)"/>
+        <ellipse cx="142" cy="34" rx="7" ry="3.5" transform="rotate(22 142 34)"/>
+      </g>
+    </g>
+
+    <!-- steam -->
+    <g fill="none" stroke="#FFF9EE" stroke-width="9" stroke-linecap="round" opacity=".72">
+      <path d="M330 300c-18-24-18-48 0-70 14-17 14-34 0-52"/>
+      <path d="M388 282c-18-24-18-48 0-70 14-17 14-34 0-52"/>
+      <path d="M446 300c-18-24-18-48 0-70 14-17 14-34 0-52"/>
+    </g>
+  </g>
+
+  <g transform="translate(450 930)" text-anchor="middle">
+    <rect x="-154" y="-34" width="308" height="56" rx="28" fill="#251E17"/>
+    <text x="0" y="3" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" letter-spacing="3" fill="#F8EEE0">ТЁПЛЫЙ БОКС</text>
+  </g>
+</svg>

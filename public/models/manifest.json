@@ -1,0 +1,86 @@
+{
+  "generatedAt": "2026-11-12T04:04:13.903Z",
+  "generator": "scripts/build-models.ts",
+  "note": "Геометрия собрана из примитивов Three.js, внешние модели и текстуры не используются. Тени, материалы и анимации настраиваются в приложении.",
+  "models": [
+    {
+      "file": "burger-beef.glb",
+      "bytes": 123004,
+      "sha256": "6771211c9ac4119bb1d453aadfe6460f9e6d3050e41987edf3c7e285030c069a",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "burger-double.glb",
+      "bytes": 128340,
+      "sha256": "8d7c8c83088a54f9643fddbaa4d8e0775a4b14fd2bd0494961da863ff6460206",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "burger-chicken.glb",
+      "bytes": 117960,
+      "sha256": "e3bd597c36eaf5d712723a42ff4fde528195f84de0edc26c5a9dab6b6ad5f93f",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "burger-veggie.glb",
+      "bytes": 117956,
+      "sha256": "5e406120818eea0a4c5abdf0a148b4b70ecf70aa14f78e0bb977419ebad0f1ef",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "shawarma.glb",
+      "bytes": 29256,
+      "sha256": "4116cced4bd7398ae1f0eced58fc2e7f515b15daa133424673e4e0d7b13be3e4",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "pizza.glb",
+      "bytes": 36396,
+      "sha256": "23cc9bb27eb2903df8abc92e222a91c776686e8f951b76b0b8a23af1d2228511",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "fries.glb",
+      "bytes": 19260,
+      "sha256": "00e6533d5429e270b5c4e4b295a2bc9ef15bd3703cdb3dda66c04a29e7f52d7f",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "drink.glb",
+      "bytes": 20580,
+      "sha256": "db407df5a77c1aee1fbdaa7c0ea2994e22f78fb223f56951e3095df902582f53",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "donut.glb",
+      "bytes": 52324,
+      "sha256": "b24a604973ece6c026900901e3918f3a48dea829c63328d8462af33b0c03ea2c",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "box.glb",
+      "bytes": 21264,
+      "sha256": "32f004d880c7a85b314772c5730bf2bef2334ea1ea8bb5e0033bc8961de75608",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    },
+    {
+      "file": "tray.glb",
+      "bytes": 28296,
+      "sha256": "0bfaf2fad53ff6f71f58e0da9e85da9a7c1ae724ab7c61ad1bc140b401bae75d",
+      "license": "Original work / demo asset, передаётся вместе с исходниками",
+      "source": "scripts/build-models.ts"
+    }
+  ],
+  "optimizedAt": "2026-11-12T04:04:15.185Z",
+  "optimization": "dedup + prune + weld + quantize (gltf-transform)"
+}
