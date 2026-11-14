@@ -87,7 +87,7 @@ export function PhotoField({
           </span>
           <strong>{photos.length > 0 ? "Добавить ещё фото" : "Приложить фото"}</strong>
           <span id="photo-hint">
-            JPEG, PNG или WebP · до 8 МБ · {photos.length} из {max}
+            JPEG, PNG или WebP · сожмём до 4 МБ · {photos.length} из {max}
           </span>
         </label>
       ) : (

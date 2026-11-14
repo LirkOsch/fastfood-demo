@@ -25,9 +25,10 @@ import {
 import { calculateOrder, type PricingSettings } from "@/lib/pricing";
 import type { CompanySettings } from "@/lib/settings";
 import { formatRub, normalizePhone } from "@/lib/format";
+import { CLIENT_MAX_BYTES, compressPhoto } from "@/lib/client/photos";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const MAX_BYTES = 8 * 1024 * 1024;
+const MAX_BYTES = CLIENT_MAX_BYTES;
 const MAX_PHOTOS = 3;
 
 interface CheckoutProps {
@@ -142,7 +143,7 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
     });
   };
 
-  const addFiles = (files: File[]) => {
+  const addFiles = async (files: File[]) => {
     setPhotoError("");
     const remaining = MAX_PHOTOS - photos.length;
     if (remaining <= 0) {
@@ -164,14 +165,21 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
         message = `«${file.name}» пустой. Выберите другой файл.`;
         continue;
       }
-      if (file.size > MAX_BYTES) {
-        message = `«${file.name}» больше 8 МБ. Выберите файл поменьше.`;
+      // Сжимаем в браузере: сервер принимает запрос не тяжелее 4.5 МБ.
+      let ready = file;
+      try {
+        ready = await compressPhoto(file);
+      } catch {
+        ready = file;
+      }
+      if (ready.size > MAX_BYTES) {
+        message = `«${file.name}» не удалось ужать до 4 МБ. Выберите фото поменьше.`;
         continue;
       }
       accepted.push({
         id: `${file.name}-${file.lastModified}-${Math.random().toString(36).slice(2, 8)}`,
-        file,
-        url: URL.createObjectURL(file),
+        file: ready,
+        url: URL.createObjectURL(ready),
       });
     }
     if (accepted.length > 0) {
@@ -260,7 +268,15 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
     const body = new FormData();
     body.set("payload", JSON.stringify(payload));
     for (const photo of photos) {
-      body.append("photos", photo.file, photo.file.name);
+      // Подстраховка: черновик мог восстановиться из старого файла — сжимаем
+      // прямо перед отправкой, чтобы влезть в лимит тела запроса.
+      let file = photo.file;
+      try {
+        file = await compressPhoto(file);
+      } catch {
+        // Оставляем как есть — сервер вернёт понятную ошибку.
+      }
+      body.append("photos", file, file.name);
     }
 
     try {
