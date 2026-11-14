@@ -11,3 +11,7 @@ test-results
 docs/screenshots/tmp
 scratch-*
 .neon
+
+.vercel
+.env*
+!.env.example
