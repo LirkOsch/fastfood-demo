@@ -4831,3 +4831,62 @@ html[data-theme="dark"] .stage-shell {
     display: none;
   }
 }
+
+/* ---------- живой кабинет: новые заказы без перезагрузки ---------- */
+
+.admin-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.64rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.admin-nav a.is-active .admin-badge {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.admin-sound {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 7px 10px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.15s var(--ease);
+}
+
+.admin-sound:hover {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+.admin-toast {
+  bottom: 26px;
+  max-width: min(92vw, 460px);
+}
+
+.admin-toast__link {
+  border-radius: 999px;
+  padding: 6px 11px;
+  background: var(--mustard);
+  color: var(--charcoal);
+  font-size: 0.74rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.admin-toast button {
+  flex: none;
+}

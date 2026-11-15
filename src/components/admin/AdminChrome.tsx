@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BoxMark } from "@/components/site/BoxMark";
+import { useOrderPulse } from "@/components/admin/useOrderPulse";
+import { unlockSound } from "@/lib/client/sound";
+
+const SOUND_KEY = "tb-admin-sound";
 
 type NavIcon =
   | "home"
@@ -79,6 +83,46 @@ export function AdminChrome({
   const pathname = usePathname();
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const { data: pulse, fresh, dismiss } = useOrderPulse(soundEnabled);
+
+  useEffect(() => {
+    try {
+      setSoundEnabled(window.localStorage.getItem(SOUND_KEY) !== "off");
+    } catch {
+      // Приватный режим — оставляем звук включённым по умолчанию.
+    }
+  }, []);
+
+  useEffect(() => {
+    const unlock = () => unlockSound();
+    window.addEventListener("pointerdown", unlock, { once: true });
+    window.addEventListener("keydown", unlock, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+  }, []);
+
+  const newCount = pulse?.newCount ?? 0;
+
+  useEffect(() => {
+    const base = document.title.replace(/^\(\d+\)\s*/, "");
+    document.title = newCount > 0 ? `(${newCount}) ${base}` : base;
+  }, [newCount]);
+
+  const toggleSound = () => {
+    setSoundEnabled((current) => {
+      const next = !current;
+      try {
+        window.localStorage.setItem(SOUND_KEY, next ? "on" : "off");
+      } catch {
+        // Настройка не сохранится — не критично.
+      }
+      if (next) unlockSound();
+      return next;
+    });
+  };
 
   const logout = async () => {
     setLoggingOut(true);
@@ -119,6 +163,11 @@ export function AdminChrome({
                 >
                   <Icon name={item.icon} />
                   {item.label}
+                  {item.href === "/admin/orders" && newCount > 0 ? (
+                    <span className="admin-badge" aria-label={`Новых заказов: ${newCount}`}>
+                      {newCount}
+                    </span>
+                  ) : null}
                 </Link>
               ))}
             </div>
@@ -130,6 +179,15 @@ export function AdminChrome({
             <strong>{user.name}</strong>
             <span>{user.email}</span>
           </div>
+          <button
+            type="button"
+            className="admin-sound"
+            onClick={toggleSound}
+            aria-pressed={soundEnabled}
+            title="Звук уведомления о новом заказе"
+          >
+            {soundEnabled ? "🔔 Звук включён" : "🔕 Звук выключен"}
+          </button>
           <Link href="/" className="btn btn--ghost btn--small btn--block" target="_blank">
             <Icon name="external" />
             Открыть сайт
@@ -160,6 +218,9 @@ export function AdminChrome({
                 className={isActive(pathname, item.href) ? "is-active" : undefined}
               >
                 {item.label}
+                {item.href === "/admin/orders" && newCount > 0 ? (
+                  <span className="admin-badge">{newCount}</span>
+                ) : null}
               </Link>
             ))}
           </nav>
@@ -175,6 +236,24 @@ export function AdminChrome({
         </div>
         <main className="admin-main">{children}</main>
       </div>
+
+      {fresh ? (
+        <div className="undo-toast admin-toast" role="status" aria-live="polite">
+          <span>
+            {fresh.orderNo ? `Новый заказ ${fresh.orderNo}` : "Новый заказ"}
+          </span>
+          <Link
+            href="/admin/orders"
+            className="admin-toast__link"
+            onClick={() => dismiss()}
+          >
+            Открыть
+          </Link>
+          <button type="button" onClick={() => dismiss()} aria-label="Скрыть уведомление">
+            ×
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
