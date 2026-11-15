@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Установить зависимости
+        run: npm ci
+
+      - name: Типы
+        run: npm run typecheck
+
+      - name: Юнит-тесты
+        run: npm test
+
+      - name: Сборка
+        run: npm run build
+        env:
+          APP_URL: https://teplybox.vercel.app
+          # Сборка идёт без внешней базы: все страницы динамические, а для
+          # проверки типов и билда достаточно локального PGlite.
+          DATABASE_URL: ""
+          PGLITE_DIR: ./.ci/pglite

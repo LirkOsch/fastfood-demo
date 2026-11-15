@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface SaveState {
   pending: boolean;
@@ -103,6 +103,11 @@ export function SaveBar({
   error: string;
   label?: string;
 }) {
+  // Кнопка включается только после гидратации: иначе очень быстрый клик
+  // срабатывает до того, как React подключил обработчик формы.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <div className="admin-form__foot">
       <span className="small" role="status" aria-live="polite">
@@ -114,7 +119,11 @@ export function SaveBar({
           "Изменения применяются сразу после сохранения."
         )}
       </span>
-      <button type="submit" className="btn btn--primary btn--small" disabled={pending}>
+      <button
+        type="submit"
+        className="btn btn--primary btn--small"
+        disabled={pending || !mounted}
+      >
         {pending ? "Сохраняем…" : label}
       </button>
     </div>
