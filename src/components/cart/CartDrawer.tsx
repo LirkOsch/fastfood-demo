@@ -221,12 +221,17 @@ export function CartDrawer({ pricing }: { pricing: PricingSettings }) {
                 </div>
               ) : null}
               <div className="cart-total-row">
-                <span>Известная сумма</span>
+                <span>Сумма без доставки</span>
                 <strong data-testid="cart-total">{formatRub(calculation.foodCharged)}</strong>
               </div>
               <p className="tiny muted">
-                Доставка и выезд за город добавляются на оформлении. Точную сумму и время
-                подтвердит владелец.
+                {pricing.deliveryFee > 0
+                  ? `Доставка по городу — ${formatRub(pricing.deliveryFee)}. `
+                  : ""}
+                {pricing.outOfTownFee > 0
+                  ? `Выезд за город — ${formatRub(pricing.outOfTownFee)}. `
+                  : ""}
+                Добавляются на оформлении. Точную сумму и время подтвердит владелец.
               </p>
               <Link
                 href="/checkout"

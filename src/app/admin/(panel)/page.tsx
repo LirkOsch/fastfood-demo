@@ -140,8 +140,8 @@ export default async function AdminDashboardPage() {
             </div>
             <div className="admin-panel__body" style={{ display: "flex", flexDirection: "column", gap: 9 }}>
               <p className="small muted">
-                Это демо-кабинет. Все изменения сохраняются в локальной базе PGlite и сразу
-                видны на клиентских страницах.
+                Это демо-кабинет. Все изменения сохраняются в защищённой облачной базе
+                PostgreSQL (Neon) и сразу видны на клиентских страницах.
               </p>
               <Link href="/admin/orders" className="btn btn--ghost btn--small btn--block">
                 Проверить новые заказы

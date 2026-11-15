@@ -2,7 +2,8 @@ import "server-only";
 import sharp from "sharp";
 
 export const MAX_PHOTOS = 3;
-export const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
+/** Отдельный файл не больше 4 МБ: клиент сжимает до 1,2 МБ, сервер — запас. */
+export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 export const MAX_IMAGE_SIDE = 1600;
 
 export interface ProcessedPhoto {
@@ -31,7 +32,7 @@ export async function processPhotos(files: File[]): Promise<PhotoResult> {
     if (file.size > MAX_UPLOAD_BYTES) {
       return {
         ok: false,
-        error: "Фото больше 8 МБ. Выберите файл поменьше или сожмите его.",
+        error: "Фото больше 4 МБ. Выберите файл поменьше или сожмите его.",
         index,
       };
     }

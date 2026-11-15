@@ -25,7 +25,11 @@ import {
 import { calculateOrder, type PricingSettings } from "@/lib/pricing";
 import type { CompanySettings } from "@/lib/settings";
 import { formatRub, normalizePhone } from "@/lib/format";
-import { CLIENT_MAX_BYTES, compressPhoto } from "@/lib/client/photos";
+import {
+  CLIENT_MAX_BYTES,
+  CLIENT_TOTAL_BUDGET,
+  compressPhoto,
+} from "@/lib/client/photos";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_BYTES = CLIENT_MAX_BYTES;
@@ -165,7 +169,7 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
         message = `«${file.name}» пустой. Выберите другой файл.`;
         continue;
       }
-      // Сжимаем в браузере: сервер принимает запрос не тяжелее 4.5 МБ.
+      // Сжимаем в браузере: у Vercel общий лимит 4,5 МБ на всё тело запроса.
       let ready = file;
       try {
         ready = await compressPhoto(file);
@@ -173,7 +177,7 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
         ready = file;
       }
       if (ready.size > MAX_BYTES) {
-        message = `«${file.name}» не удалось ужать до 4 МБ. Выберите фото поменьше.`;
+        message = `«${file.name}» не удалось ужать до нужного размера. Выберите фото поменьше.`;
         continue;
       }
       accepted.push({
@@ -267,15 +271,34 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
 
     const body = new FormData();
     body.set("payload", JSON.stringify(payload));
+    const prepared: File[] = [];
     for (const photo of photos) {
-      // Подстраховка: черновик мог восстановиться из старого файла — сжимаем
-      // прямо перед отправкой, чтобы влезть в лимит тела запроса.
+      // Подстраховка: черновик мог восстановиться из старой версии — сжимаем
+      // прямо перед отправкой, чтобы влезть в общий лимит тела запроса.
       let file = photo.file;
       try {
         file = await compressPhoto(file);
       } catch {
-        // Оставляем как есть — сервер вернёт понятную ошибку.
+        // Оставляем как есть — ниже проверим размер и покажем понятную ошибку.
       }
+      if (file.size > CLIENT_MAX_BYTES) {
+        setFormError(
+          `Не удалось подготовить «${photo.file.name}» к отправке. Выберите фото поменьше или удалите его — остальные данные сохранены.`,
+        );
+        setSubmitting(false);
+        return;
+      }
+      prepared.push(file);
+    }
+    const totalPhotoBytes = prepared.reduce((sum, file) => sum + file.size, 0);
+    if (totalPhotoBytes > CLIENT_TOTAL_BUDGET) {
+      setFormError(
+        "Суммарный размер фотографий слишком большой. Удалите одно фото или выберите снимки поменьше — остальные данные сохранены.",
+      );
+      setSubmitting(false);
+      return;
+    }
+    for (const file of prepared) {
       body.append("photos", file, file.name);
     }
 
@@ -285,6 +308,13 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
         body,
         headers: { Accept: "application/json" },
       });
+      if (response.status === 413) {
+        setFormError(
+          "Фотографии слишком тяжёлые для отправки. Удалите одно фото или выберите снимок поменьше — данные формы сохранены.",
+        );
+        setSubmitting(false);
+        return;
+      }
       const data = (await response.json().catch(() => null)) as
         | {
             ok?: boolean;
@@ -711,7 +741,11 @@ export function CheckoutClient({ company, pricing }: CheckoutProps) {
             ) : null}
 
             <div className="summary-total">
-              <span>Известная сумма</span>
+              <span>
+                {calculation.deliveryFee + calculation.outOfTownFee > 0
+                  ? "Известная сумма с доставкой"
+                  : "Известная сумма"}
+              </span>
               <strong data-testid="checkout-total">{formatRub(calculation.totalKnown)}</strong>
             </div>
 

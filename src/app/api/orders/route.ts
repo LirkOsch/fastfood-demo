@@ -23,8 +23,15 @@ export async function POST(request: Request) {
   }
 
   const contentLength = Number(request.headers.get("content-length") ?? 0);
-  if (contentLength > 30 * 1024 * 1024) {
-    return NextResponse.json({ error: "Слишком большой запрос." }, { status: 413 });
+  // Такой же предел, как у Vercel: 4,5 МБ на всё тело запроса.
+  if (contentLength > 4.5 * 1024 * 1024) {
+    return NextResponse.json(
+      {
+        error:
+          "Запрос слишком большой. Удалите одно фото или выберите снимок поменьше — данные формы сохранятся.",
+      },
+      { status: 413 },
+    );
   }
 
   const contentType = request.headers.get("content-type") ?? "";
