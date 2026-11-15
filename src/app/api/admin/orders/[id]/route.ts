@@ -3,6 +3,8 @@ import { requireAdminApi } from "@/lib/auth";
 import { checkRequestOrigin } from "@/lib/origin";
 import { updateOrder } from "@/lib/orders";
 import { fieldErrors, orderUpdateSchema } from "@/lib/validation";
+import { scheduleBackground } from "@/lib/background";
+import { adminOrderUrl, buildStatusMessage, sendTelegramMessage } from "@/lib/notify";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,6 +44,14 @@ export async function PATCH(
     return NextResponse.json(
       { error: result.error, fieldErrors: result.fieldErrors },
       { status: result.status },
+    );
+  }
+  if (result.notice) {
+    const text = buildStatusMessage(result.notice, adminOrderUrl(id));
+    scheduleBackground(
+      sendTelegramMessage(text).then((sent) => {
+        if (!sent.ok) console.warn("[notify] смена статуса:", sent.error);
+      }),
     );
   }
   return NextResponse.json({ ok: true });

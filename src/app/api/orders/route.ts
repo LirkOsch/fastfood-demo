@@ -4,6 +4,8 @@ import { createOrder } from "@/lib/orders";
 import { processPhotos } from "@/lib/images";
 import { createOrderSchema, fieldErrors } from "@/lib/validation";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { scheduleBackground } from "@/lib/background";
+import { adminOrderUrl, buildNewOrderMessage, sendTelegramMessage } from "@/lib/notify";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -90,6 +92,20 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: result.error, fieldErrors: result.fieldErrors },
       { status: result.status },
+    );
+  }
+
+  // Уведомление владельцу не должно задерживать ответ клиенту: отправляем
+  // после ответа, а если Telegram недоступен — заказ всё равно сохраняется.
+  if (result.notice) {
+    const text = buildNewOrderMessage(
+      result.notice,
+      result.orderId ? adminOrderUrl(result.orderId) : "",
+    );
+    scheduleBackground(
+      sendTelegramMessage(text).then((sent) => {
+        if (!sent.ok) console.warn("[notify] новый заказ:", sent.error);
+      }),
     );
   }
 

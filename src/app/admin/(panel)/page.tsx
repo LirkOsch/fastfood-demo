@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getCurrentAdmin } from "@/lib/auth";
 import { getAppSettings } from "@/lib/db";
 import { listAdminOrders } from "@/lib/orders";
+import { notificationsConfigured } from "@/lib/notify";
+import { NotificationCard } from "@/components/admin/NotificationCard";
 import {
   formatDateTime,
   formatRub,
@@ -134,6 +136,7 @@ export default async function AdminDashboardPage() {
         </section>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <NotificationCard configured={notificationsConfigured()} />
           <section className="admin-panel">
             <div className="admin-panel__head">
               <h2>Привет, {admin?.name ?? "владелец"}</h2>

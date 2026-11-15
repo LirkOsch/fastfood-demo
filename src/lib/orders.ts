@@ -18,7 +18,8 @@ import {
   type CartLineInput,
   type PricedLine,
 } from "@/lib/pricing";
-import { normalizePhone, statusLabel } from "@/lib/format";
+import { formatDateTime, normalizePhone, statusLabel } from "@/lib/format";
+import type { OrderNotice, StatusNotice } from "@/lib/notify";
 import { getCategory, getItem } from "@/lib/menu";
 import { bonusCode, localDateTimeToUtc, orderNumber, publicToken } from "@/lib/tokens";
 import type { ProcessedPhoto } from "@/lib/images";
@@ -32,6 +33,9 @@ export interface CreateOrderSuccess {
   token: string;
   orderNo: string;
   idempotent: boolean;
+  /** Данные для уведомления владельцу. Только для новых заказов. */
+  notice?: OrderNotice;
+  orderId?: string;
 }
 
 export interface ServiceFailure {
@@ -270,7 +274,32 @@ export async function createOrder(
           createdAt,
         });
       });
-      return { ok: true, token, orderNo, idempotent: false };
+      return {
+        ok: true,
+        token,
+        orderNo,
+        idempotent: false,
+        orderId: id,
+        notice: {
+          orderNo,
+          customerName: input.customerName.trim(),
+          phone: normalizedPhone,
+          deliveryMethod: input.deliveryMethod,
+          outOfTown: input.deliveryMethod === "delivery" ? input.outOfTown : false,
+          address: input.deliveryMethod === "delivery" ? input.address.trim() || null : null,
+          lines: calculation.lines.map((line) => ({
+            name: line.name,
+            variantLabel: line.variantLabel,
+            qty: line.qty,
+            quote: line.quote,
+          })),
+          totalKnown: calculation.totalKnown,
+          hasQuote: calculation.hasQuote,
+          comment: input.comment?.trim() || null,
+          preferredDate: input.preferredDate || null,
+          preferredTime: input.preferredTime || null,
+        },
+      };
     } catch (error) {
       if (isUniqueViolation(error)) {
         const duplicate = await db
@@ -523,7 +552,7 @@ export interface UpdateOrderInput {
 export async function updateOrder(
   id: string,
   input: UpdateOrderInput,
-): Promise<{ ok: true } | ServiceFailure> {
+): Promise<{ ok: true; notice?: StatusNotice } | ServiceFailure> {
   const db = await getDb();
   const settings = await getAppSettings();
   const rows = await db.select().from(orders).where(eq(orders.id, id)).limit(1);
@@ -636,7 +665,18 @@ export async function updateOrder(
     if (events.length > 0) await tx.insert(orderEvents).values(events);
   });
 
-  return { ok: true };
+  const notice: StatusNotice | undefined = statusChanged
+    ? {
+        orderNo: order.orderNo,
+        customerName: order.customerName,
+        phone: order.phone,
+        status: input.status,
+        finalTotal,
+        agreedAtText: agreedAt ? formatDateTime(agreedAt, settings.company.timezone) : null,
+      }
+    : undefined;
+
+  return { ok: true, notice };
 }
 
 export async function deleteOrder(
@@ -791,4 +831,32 @@ export async function countOrders(): Promise<number> {
   const db = await getDb();
   const rows = await db.select({ value: count() }).from(orders);
   return Number(rows[0]?.value ?? 0);
+}
+
+export interface OrderPulse {
+  /** Время самого свежего заказа — по нему кабинет замечает новинку. */
+  latest: string | null;
+  latestOrderNo: string | null;
+  newCount: number;
+  total: number;
+}
+
+/** Лёгкий опрос для живого кабинета: три дешёвых запроса по индексам. */
+export async function orderPulse(): Promise<OrderPulse> {
+  const db = await getDb();
+  const [latestRows, newRows, totalRows] = await Promise.all([
+    db
+      .select({ orderNo: orders.orderNo, createdAt: orders.createdAt })
+      .from(orders)
+      .orderBy(desc(orders.createdAt))
+      .limit(1),
+    db.select({ value: count() }).from(orders).where(eq(orders.status, "new")),
+    db.select({ value: count() }).from(orders),
+  ]);
+  return {
+    latest: latestRows[0]?.createdAt.toISOString() ?? null,
+    latestOrderNo: latestRows[0]?.orderNo ?? null,
+    newCount: Number(newRows[0]?.value ?? 0),
+    total: Number(totalRows[0]?.value ?? 0),
+  };
 }
