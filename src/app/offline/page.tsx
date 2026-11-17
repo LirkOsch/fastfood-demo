@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Нет соединения",
-  description: "Офлайн-страница демо-кафе «Тёплый бокс».",
+  description: "Офлайн-страница кафе «Тёплый бокс».",
   robots: { index: false, follow: false },
 };
 

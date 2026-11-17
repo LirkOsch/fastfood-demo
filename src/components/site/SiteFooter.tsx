@@ -51,9 +51,9 @@ export function SiteFooter({ company }: { company: CompanySettings }) {
 
         <div className="footer-base">
           <span>
-            © {new Date().getFullYear()} {company.legalName}. Демонстрационный проект.
+            © {new Date().getFullYear()} {company.legalName}. Все права защищены.
           </span>
-          <span>Сделано без сторонних фотографий и чужих 3D-моделей.</span>
+          <span>{company.city} · {company.workingHours}</span>
         </div>
       </div>
     </footer>

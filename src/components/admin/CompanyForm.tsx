@@ -37,8 +37,8 @@ export function CompanyForm({ initial }: { initial: CompanySettings }) {
       <section className="admin-form__section">
         <h2>Основное</h2>
         <p>
-          Название и описание показываются на витрине, в шапке и подвале сайта. Это демо-проект:
-          контакты и адрес вымышленные.
+          Название и описание показываются на витрине, в шапке и подвале сайта, а также в
+          заголовках страниц.
         </p>
         <div className="form-grid">
           <Field label="Название кафе" error={fieldErrors.name}>

@@ -109,7 +109,7 @@ export default async function AdminOrdersPage({
           <div className="admin-empty">
             {q || status
               ? "По этому фильтру заказов нет."
-              : "Заказов пока нет. Оформите демо-заказ на сайте, чтобы проверить поток."}
+              : "Заказов пока нет. Оформите заказ на сайте, чтобы проверить поток."}
           </div>
         ) : (
           <div style={{ overflowX: "auto" }}>

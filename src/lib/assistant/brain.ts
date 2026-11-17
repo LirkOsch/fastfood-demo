@@ -301,7 +301,7 @@ export function answerAssistant(message: string, ctx: AssistantContext): Assista
     normalized.includes("перевод")
   ) {
     return local(
-      "Онлайн-оплата в демо-версии не подключена: заявку подтверждает человек и согласует способ оплаты.",
+      "Онлайн-оплата на сайте не подключена: заявку подтверждает человек и согласует способ оплаты.",
       "payment",
       {
         bullets: [
@@ -350,7 +350,7 @@ export function answerAssistant(message: string, ctx: AssistantContext): Assista
     normalized.includes("непереносимость")
   ) {
     return local(
-      `В демо нет структурированных данных об аллергенах, поэтому не буду угадывать состав. Состав каждой позиции указан в меню, а аллергены и замены согласуйте с кухней: ${contactLine(ctx)}.`,
+      `У меня нет структурированных данных об аллергенах, поэтому не буду угадывать состав. Состав каждой позиции указан в меню, а аллергены и замены согласуйте с кухней: ${contactLine(ctx)}.`,
       "allergy",
       {
         bullets: [

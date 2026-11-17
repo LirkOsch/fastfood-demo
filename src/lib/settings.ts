@@ -46,11 +46,11 @@ export const DEFAULT_COMPANY: CompanySettings = {
   email: "hello@teplybox.example",
   city: "Сарапул",
   deliveryArea: "Сарапул и ближайшие районы",
-  address: "Сарапул, ул. Тёплая, 12 (демо-адрес)",
+  address: "Сарапул, ул. Тёплая, 12",
   workingHours: "Ежедневно, 10:00–22:00",
   accent: "#E2542C",
   timezone: "Europe/Samara",
-  legalName: "Демо-проект «Тёплый бокс»",
+  legalName: "Кафе «Тёплый бокс»",
 };
 
 export const DEFAULT_GAME: GameSettings = {

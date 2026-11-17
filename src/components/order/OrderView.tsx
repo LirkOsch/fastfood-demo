@@ -478,7 +478,7 @@ export function OrderView({ initial, token, company, created }: OrderViewProps) 
                         {company.phone}
                       </a>
                     ) : (
-                      "Телефон в демо не указан"
+                      "Телефон не указан"
                     )}
                   </span>
                 </div>

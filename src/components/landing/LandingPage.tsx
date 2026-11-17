@@ -137,7 +137,7 @@ export function LandingPage({ settings }: { settings: AppSettings }) {
                     <path d="m5 12 4 4L19 6" />
                   </svg>
                 </span>
-                Демо-кафе · {company.city} · заказ без звонка
+                {company.city} · заказ без звонка
               </span>
               <h1>
                 Горячо.
@@ -577,8 +577,8 @@ export function LandingPage({ settings }: { settings: AppSettings }) {
                 <span className="eyebrow">О кафе</span>
                 <h2>Маленькая кухня с большим вниманием к деталям</h2>
                 <p>
-                  {company.description} Это демонстрационный проект: реальные заказы не
-                  принимаются, а контакты и адрес — пример для портфолио.
+                  {company.description} Заказ можно оформить без звонка: выберите блюда,
+                  укажите время и следите за статусом по приватной ссылке.
                 </p>
                 <ul className="feature-band__list">
                   <li>
@@ -657,8 +657,7 @@ export function LandingPage({ settings }: { settings: AppSettings }) {
                   <summary>Можно ли оплатить бонусом сразу?</summary>
                   <p>
                     Нет. Бонус за игру действует на следующий заказ, а не на текущий.
-                    Код активирует владелец вручную — это демонстрационная механика без
-                    онлайн-платежей.
+                    Код активирует владелец вручную при подтверждении заказа.
                   </p>
                 </details>
                 <details className="faq-item">
@@ -684,9 +683,8 @@ export function LandingPage({ settings }: { settings: AppSettings }) {
                   <span className="eyebrow">Контакты</span>
                   <h2>Заходите на огонёк или заказывайте домой</h2>
                   <p>
-                    {company.deliveryArea}. {company.workingHours}. Это демо-адрес и
-                    демо-телефон: перед реальным запуском замените их в кабинете
-                    владельца.
+                    {company.deliveryArea}. {company.workingHours}. Адрес и телефон — ниже, в
+                    разделе контактов.
                   </p>
                   <div className="hero__actions" style={{ marginTop: 18 }}>
                     <Link href="#menu" className="btn btn--primary">
@@ -719,7 +717,7 @@ export function LandingPage({ settings }: { settings: AppSettings }) {
                           {formatPhone(company.phone)}
                         </a>
                       ) : (
-                        "Уточняется в демо"
+                        "Не указан"
                       )}
                     </span>
                   </div>

@@ -8,8 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Контакты",
-  description:
-    "Как связаться с демо-кафе «Тёплый бокс»: адрес, часы работы, телефон и почта. Контакты вымышлены.",
+  description: "Адрес самовывоза, часы работы, телефон и почта для связи.",
   alternates: { canonical: "/contacts" },
 };
 
@@ -20,7 +19,7 @@ export default async function ContactsPage() {
     <LegalShell
       company={company}
       title="Контакты"
-      meta="Демонстрационный проект: адрес, телефон и почта вымышлены и не ведут в реальное кафе."
+      meta="Свяжитесь с нами по телефону или почте — либо оформите заказ на сайте."
     >
       <section className="legal-card">
         <h2 style={{ marginTop: 0 }}>{company.name}</h2>
@@ -42,7 +41,7 @@ export default async function ContactsPage() {
                 {formatPhone(company.phone)}
               </a>
             ) : (
-              "в демо-настройках не указан"
+              "не указан"
             )}
           </li>
           <li>
@@ -78,11 +77,17 @@ export default async function ContactsPage() {
       </section>
 
       <section>
-        <h2>Техническая поддержка демо</h2>
+        <h2>Если что-то не работает</h2>
         <p>
-          Проект создан как переносимый MVP. Инструкции по запуску, переменные окружения и
-          ограничения описаны в README рядом с исходным кодом. Если сайт не открывается, проверьте,
-          запущен ли сервер и доступна ли база данных.
+          Если сайт не открывается или заказ не отправился, позвоните по телефону{" "}
+          {company.phone ? (
+            <a href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}>{formatPhone(company.phone)}</a>
+          ) : (
+            "из раздела выше"
+          )}{" "}
+          или напишите на <a href={`mailto:${company.email}`}>{company.email}</a>. Не отправляйте
+          заказ повторно, пока не уточните, сохранился ли он: страница заказа открывается по
+          приватной ссылке.
         </p>
       </section>
     </LegalShell>
